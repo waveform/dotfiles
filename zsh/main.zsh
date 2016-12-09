@@ -1,0 +1,31 @@
+# You can put files here to add functionality separated per file, which
+# will be ignored by git.
+# Files on the custom/ directory will be automatically loaded by the init
+# script, in alphabetical order.
+
+# For example: add yourself some shortcuts to projects you often work on.
+#
+# brainstormr=~/Projects/development/planetargon/brainstormr
+# cd $brainstormr
+#
+
+#[[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && . $(brew --prefix)/etc/profile.d/autojump.sh
+
+alias rm='rm -i'
+alias afind='ag -il'
+alias cls='clear'
+alias ll='ls -l'
+alias la='ls -a'
+alias vi='mvim -v'
+alias vim='mvim -v'
+alias cl='clang++ -std=c++14'
+alias grep="grep --color=auto"
+alias dict="~/lab/script/dict.py"
+alias -s c=vi
+alias -s cpp=vi
+alias -s js=vi
+alias -s txt=vi
+alias -s gz='tar -xzvf'
+alias -s tgz='tar -xzvf'
+alias -s zip='unzip'
+alias -s bz2='tar -xjvf'
