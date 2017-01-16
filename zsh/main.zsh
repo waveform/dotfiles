@@ -21,6 +21,8 @@ alias vim='mvim -v'
 alias cl='clang++ -std=c++14'
 alias grep="grep --color=auto"
 alias dict="~/lab/script/dict.py"
+alias sms="~/lab/script/sms.py"
+alias hugooo="hugo server --buildDrafts -t hugo_theme_beg"
 alias -s c=vi
 alias -s cpp=vi
 alias -s js=vi
