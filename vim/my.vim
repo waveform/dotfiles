@@ -13,7 +13,6 @@
 "Plugin 'tpope/vim-fugitive'
 "Plugin 'rking/ag.vim'
 "Plugin 'ctrlpvim/ctrlp.vim'
-"Plugin 'christoomey/vim-tmux-navigator'
 
 "call vundle#end()
 "filetype plugin indent on
@@ -23,7 +22,7 @@
 "set rtp+=~/dotfiles/vim
 
 "try
-"source ~/dotfiles/vim/wave.vim
+"source ~/dotfiles/vim/my.vim
 "catch
 "endtry
 
@@ -86,7 +85,7 @@ match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 set backspace=indent,eol,start
 
 " Tab control
-set noexpandtab
+set expandtab
 set smarttab
 set tabstop=4      " the visible width of tabs
 set softtabstop=4  " edit as if the tabs are 4 characters wide
@@ -163,26 +162,30 @@ vnoremap <s-tab> <gv
 
 " Section Plugins {{{
 " NERDTree
-map <silent> <M-E> :NERDTreeToggle<CR>
+map <silent> <c-e> :NERDTreeToggle<CR>
 
 " CtrlP
-let g:ctrlp_map = '<M-p>'
+let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
-"let g:ctrlp_working_path_mode = 'ra'
+let g:ctrlp_working_path_mode = 'ra'
+let g:ctrlp_custom_ignore = '\.(git|hg|svn|pyc|o)$'
 
 " ToggleNERDTree
 let NERDTreeShowHidden=1
 
 " YouCompleteMe
-"nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
+nnoremap gd :YcmCompleter GoToDefinitionElseDeclaration<CR>
+
 let g:ycm_confirm_extra_conf = 0
 let g:ycm_python_binary_path = 'python'
 let g:syntastic_always_populate_loc_list = 1
-let g:ycm_min_num_of_chars_for_completion = 2
+let g:ycm_min_num_of_chars_for_completion = 3
 let g:ycm_seed_identifiers_with_syntax = 1
 "let g:ycm_complete_in_comments = 1
 "let g:ycm_complete_in_strings = 1
-let g:ycm_key_invoke_completion = '<C-a>'
+"let g:ycm_key_invoke_completion = '<c-a>'
 
+" Ag
+let g:ag_working_path_mode="r"
 
 " }}}
