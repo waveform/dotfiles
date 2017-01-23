@@ -13,6 +13,8 @@
 "Plugin 'tpope/vim-fugitive'
 "Plugin 'rking/ag.vim'
 "Plugin 'ctrlpvim/ctrlp.vim'
+"Plugin 'Raimondi/delimitMate'
+"Plugin 'godlygeek/tabular'
 
 "call vundle#end()
 "filetype plugin indent on
