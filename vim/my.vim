@@ -26,7 +26,6 @@ Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'Raimondi/delimitMate'
 Plugin 'godlygeek/tabular'
 Plugin 'easymotion/vim-easymotion'
-Plugin 'sickill/vim-monokai'
 Plugin 'altercation/vim-colors-solarized'
 
 call vundle#end()
@@ -89,10 +88,12 @@ set ttimeoutlen=100            " faster timeout for escape key and others
 
 " Section User Interface {{{
 
+let g:solarized_termcolors=256
+let g:solarized_visibility='high'
 set t_Co=256                   " 256 colors terminal
 set background=dark
 colorscheme solarized
-"colorscheme monokai
+highlight SignColumn ctermbg=234
 
 if has('gui_running')
     set guifont=Monaco:h18
@@ -101,7 +102,7 @@ if has('gui_running')
     set guioptions-=r          " right scroll bar
     set guioptions-=b          " bottom scroll bar
     set guioptions-=h          " only calculate bottom scroll size of current line
-    set shortmess=atI          " Don't show the intro message at start and 
+    set shortmess=atI          " Don't show the intro message at start and
                                "   truncate msgs (avoid press ENTER msgs).
 endif
 
@@ -227,7 +228,11 @@ let NERDTreeHighlightCursorline=1
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_working_path_mode = 'ra'
-let g:ctrlp_custom_ignore = '\.(git|hg|svn|pyc|o|pdf|docx|zip)$'
+let g:ctrlp_custom_ignore = {
+  \ 'dir' : '\v[\/]\.(git|hg|svn)$',
+  \ 'file': '\v\.(exe|so|dll|pdf|o|docx|zip|pyc)$',
+  \ 'link': '',
+  \ }
 
 " YouCompleteMe
 nnoremap gd :YcmCompleter GoToDefinitionElseDeclaration<CR>
@@ -238,14 +243,11 @@ let g:syntastic_always_populate_loc_list = 1
 let g:ycm_min_num_of_chars_for_completion = 3
 let g:ycm_seed_identifiers_with_syntax = 1
 "let g:ycm_complete_in_comments = 1
-"let g:ycm_complete_in_strings = 1
+"let g:ycm_complete_in_strings = 0
 "let g:ycm_key_invoke_completion = '<c-a>'
 
 " Ag
 let g:ag_working_path_mode="r"
-
-" ColorScheme Solarized
-let g:solarized_termcolors=256
 
 " Tabular
 noremap <silent> <leader>t: :Tabularize /:<CR>
@@ -268,3 +270,4 @@ map  <leader>w <Plug>(easymotion-bd-w)
 nmap <leader>w <Plug>(easymotion-overwin-w)
 
 " }}}
+
