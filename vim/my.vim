@@ -27,6 +27,7 @@ Plugin 'Raimondi/delimitMate'
 Plugin 'godlygeek/tabular'
 Plugin 'easymotion/vim-easymotion'
 Plugin 'sickill/vim-monokai'
+Plugin 'altercation/vim-colors-solarized'
 
 call vundle#end()
 
@@ -89,7 +90,9 @@ set ttimeoutlen=100            " faster timeout for escape key and others
 " Section User Interface {{{
 
 set t_Co=256                   " 256 colors terminal
-colorscheme monokai
+set background=dark
+colorscheme solarized
+"colorscheme monokai
 
 if has('gui_running')
     set guifont=Monaco:h18
@@ -240,6 +243,9 @@ let g:ycm_seed_identifiers_with_syntax = 1
 
 " Ag
 let g:ag_working_path_mode="r"
+
+" ColorScheme Solarized
+let g:solarized_termcolors=256
 
 " Tabular
 noremap <silent> <leader>t: :Tabularize /:<CR>
