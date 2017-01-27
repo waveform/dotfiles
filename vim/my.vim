@@ -26,7 +26,7 @@ Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'Raimondi/delimitMate'
 Plugin 'godlygeek/tabular'
 Plugin 'easymotion/vim-easymotion'
-Plugin 'altercation/vim-colors-solarized'
+Plugin 'waveform/vim-colors-solarized'
 
 call vundle#end()
 
@@ -93,7 +93,6 @@ let g:solarized_visibility='high'
 set t_Co=256                   " 256 colors terminal
 set background=dark
 colorscheme solarized
-highlight SignColumn ctermbg=234
 
 if has('gui_running')
     set guifont=Monaco:h18
