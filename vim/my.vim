@@ -157,7 +157,7 @@ set visualbell
 " indentation
 set expandtab
 set autoindent smartindent
-set copyindent
+set nocopyindent
 set smarttab
 set softtabstop=4  " edit as if the tabs are 4 characters wide
 set tabstop=4      " the visible width of tabs
