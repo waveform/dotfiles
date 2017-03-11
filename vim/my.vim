@@ -27,6 +27,7 @@ Plugin 'Raimondi/delimitMate'
 Plugin 'godlygeek/tabular'
 Plugin 'easymotion/vim-easymotion'
 Plugin 'waveform/vim-colors-solarized'
+Plugin 'christoomey/vim-tmux-navigator'
 
 call vundle#end()
 
@@ -192,7 +193,6 @@ set synmaxcol=256      " faster when opening files with large lines, default is 
 " }}}
 
 " Section Home-made Mapping and Function {{{
-
 " mapping tab for intent
 nnoremap <tab> V>
 nnoremap <s-tab> V<
@@ -257,16 +257,20 @@ noremap <silent> <leader>t\| :Tabularize /\|<CR>
 
 " Easy Motion
 " <leader>f{char} to move to {char}
-map  <leader>f <Plug>(easymotion-bd-f)
-nmap <leader>f <Plug>(easymotion-overwin-f)
+"map  <leader>f <Plug>(easymotion-bd-f)
+"nmap <leader>f <Plug>(easymotion-overwin-f)
 " s{char}{char} to move to {char}{char}
 nmap s <Plug>(easymotion-overwin-f2)
 " move to line
-map  <leader>L <Plug>(easymotion-bd-jk)
-nmap <leader>L <Plug>(easymotion-overwin-line)
+map  <leader>l <Plug>(easymotion-bd-jk)
+nmap <leader>l <Plug>(easymotion-overwin-line)
 " move to word
 map  <leader>w <Plug>(easymotion-bd-w)
 nmap <leader>w <Plug>(easymotion-overwin-w)
+
+" vim-tmux-navigator
+"let g:tmux_navigator_save_on_switch = 2
+"let g:tmux_navigator_disable_when_zoomed = 1
 
 " }}}
 
