@@ -16,8 +16,10 @@ alias afind='ag -il'
 alias cls='clear'
 alias ll='ls -l'
 alias la='ls -a'
-alias vi='mvim -v'
-alias vim='mvim -v'
+if [ "$(uname)" = "Darwin" ]; then
+    alias vi='mvim -v'
+    alias vim='mvim -v'
+fi
 alias cl='clang++ -std=c++14'
 alias grep="grep --color=auto"
 alias dict="~/lab/script/dict.py"

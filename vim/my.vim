@@ -229,7 +229,7 @@ let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_working_path_mode = 'ra'
 let g:ctrlp_custom_ignore = {
   \ 'dir' : '\v[\/]\.(git|hg|svn)$',
-  \ 'file': '\v\.(exe|so|dll|pdf|o|docx|zip|pyc)$',
+  \ 'file': '\v\.(exe|so|dll|pdf|o|docx|zip|pyc|d)$',
   \ 'link': '',
   \ }
 
@@ -241,6 +241,8 @@ let g:ycm_python_binary_path = 'python'
 let g:syntastic_always_populate_loc_list = 1
 let g:ycm_min_num_of_chars_for_completion = 3
 let g:ycm_seed_identifiers_with_syntax = 1
+let g:ycm_filetype_whitelist = { 'cpp' : 1, 'c' : 1 }
+let g:ycm_filetype_blacklist = { 'hex' : 1, 'txt' : 1 }
 "let g:ycm_complete_in_comments = 1
 "let g:ycm_complete_in_strings = 0
 "let g:ycm_key_invoke_completion = '<c-a>'
