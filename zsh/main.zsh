@@ -19,6 +19,8 @@ alias la='ls -a'
 if [ "$(uname)" = "Darwin" ]; then
     alias vi='mvim -v'
     alias vim='mvim -v'
+else
+    alias vi='vim'
 fi
 alias cl='clang++ -std=c++14'
 alias grep="grep --color=auto"
