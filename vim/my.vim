@@ -7,30 +7,21 @@
 
 
 set nocompatible
-filetype on
-filetype off
-
 " Section Plugin {{{
+call plug#begin('~/.vim/plugged')
 
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+Plug 'Valloric/YouCompleteMe'
+Plug 'scrooloose/nerdtree'
+Plug 'tpope/vim-fugitive'
+Plug 'rking/ag.vim'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'Raimondi/delimitMate'
+Plug 'godlygeek/tabular'
+Plug 'easymotion/vim-easymotion'
+Plug 'waveform/vim-colors-solarized'
+Plug 'christoomey/vim-tmux-navigator'
 
-" let Vundle manage Vundle, required
-Plugin 'gmarik/Vundle.vim'
-Plugin 'Valloric/YouCompleteMe'
-Plugin 'scrooloose/nerdtree'
-Plugin 'tpope/vim-fugitive'
-Plugin 'rking/ag.vim'
-Plugin 'ctrlpvim/ctrlp.vim'
-Plugin 'Raimondi/delimitMate'
-Plugin 'godlygeek/tabular'
-Plugin 'easymotion/vim-easymotion'
-Plugin 'waveform/vim-colors-solarized'
-Plugin 'christoomey/vim-tmux-navigator'
-
-call vundle#end()
-
+call plug#end()
 " }}}
 
 " Section General {{{
@@ -248,6 +239,7 @@ let g:ycm_filetype_blacklist = { 'hex' : 1, 'txt' : 1 }
 "let g:ycm_key_invoke_completion = '<c-a>'
 
 " Ag
+let g:ag_prg="ag --vimgrep --smart-case"
 let g:ag_working_path_mode="r"
 
 " Tabular
@@ -258,21 +250,16 @@ noremap <silent> <leader>t" :Tabularize /"<CR>
 noremap <silent> <leader>t\| :Tabularize /\|<CR>
 
 " Easy Motion
-" <leader>f{char} to move to {char}
-"map  <leader>f <Plug>(easymotion-bd-f)
-"nmap <leader>f <Plug>(easymotion-overwin-f)
 " s{char}{char} to move to {char}{char}
+map  s <Plug>(easymotion-bd-f2)
 nmap s <Plug>(easymotion-overwin-f2)
 " move to line
 map  <leader>l <Plug>(easymotion-bd-jk)
 nmap <leader>l <Plug>(easymotion-overwin-line)
-" move to word
-map  <leader>w <Plug>(easymotion-bd-w)
-nmap <leader>w <Plug>(easymotion-overwin-w)
 
 " vim-tmux-navigator
 "let g:tmux_navigator_save_on_switch = 2
-"let g:tmux_navigator_disable_when_zoomed = 1
+let g:tmux_navigator_disable_when_zoomed = 1
 
 " }}}
 
