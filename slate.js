@@ -1,3 +1,7 @@
+// please put these two lines into .slate.js
+// S.source("~/.files/slate.js");
+// S.log("[SLATE] -------------- Finished Loading Config --------------");
+
 // Configs
 S.cfga({
   "defaultToCurrentScreen" : true,
