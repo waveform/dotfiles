@@ -1,7 +1,7 @@
 " heavily inspired by Miller Medeiros .vimrc file
 "set rtp+=~/.files/vim
 "try
-"    source ~/.files/vim.conf
+"    source ~/.files/vim.vimrc
 "catch
 "endtry
 
@@ -233,7 +233,7 @@ let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_working_path_mode = 'ra'
 let g:ctrlp_custom_ignore = {
   \ 'dir' : '\v[\/]\.(git|hg|svn)$',
-  \ 'file': '\v\.(exe|so|dll|pdf|o|docx|pyc|d)$',
+  \ 'file': '\v\.(exe|so|dll|pdf|o|docx|pyc|d|a)$',
   \ 'link': '',
   \ }
 
@@ -245,7 +245,7 @@ let g:ycm_python_binary_path = 'python'
 let g:syntastic_always_populate_loc_list = 1
 let g:ycm_min_num_of_chars_for_completion = 3
 let g:ycm_seed_identifiers_with_syntax = 1
-let g:ycm_filetype_whitelist = { 'cpp' : 1, 'c' : 1 }
+let g:ycm_filetype_whitelist = { 'cpp' : 1, 'hpp' : 1, 'c' : 1, 'h' : 1}
 let g:ycm_filetype_blacklist = { 'hex' : 1, 'txt' : 1 }
 "let g:ycm_complete_in_comments = 1
 "let g:ycm_complete_in_strings = 0
