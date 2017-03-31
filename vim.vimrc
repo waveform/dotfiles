@@ -215,6 +215,7 @@ function! StripWhitespace()
     call setreg('/', old_query)
 endfunction
 noremap <leader>ss :call StripWhitespace()<CR>
+noremap <leader>a  :Ag 
 
 " }}}
 
@@ -231,6 +232,8 @@ let NERDTreeHighlightCursorline=1
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_working_path_mode = 'ra'
+let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+"let g:ctrlp_use_caching = 0
 let g:ctrlp_custom_ignore = {
   \ 'dir' : '\v[\/]\.(git|hg|svn)$',
   \ 'file': '\v\.(exe|so|dll|pdf|o|docx|pyc|d|a)$',
