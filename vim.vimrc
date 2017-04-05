@@ -191,6 +191,8 @@ noremap <leader>r :so $MYVIMRC<CR>
 " close quickfix and locationlist windows
 noremap <leader>c :ccl <bar> lcl<CR>
 
+noremap ' `
+
 " mapping tab for intent
 "nnoremap <tab> V>
 "nnoremap <s-tab> V<
@@ -215,7 +217,6 @@ function! StripWhitespace()
     call setreg('/', old_query)
 endfunction
 noremap <leader>ss :call StripWhitespace()<CR>
-noremap <leader>a  :Ag 
 
 " }}}
 
@@ -256,6 +257,7 @@ let g:ycm_filetype_blacklist = { 'hex' : 1, 'txt' : 1 }
 
 " Ag
 let g:ag_prg="ag --vimgrep --smart-case"
+noremap <leader>a  yiw:Ag <C-R><C-W><CR>
 let g:ag_working_path_mode="r"
 
 " Tabular
