@@ -187,9 +187,9 @@ set synmaxcol=256      " faster when opening files with large lines, default is 
 
 " Section Home-made Mapping and Function {{{
 " reload vimrc file
-noremap <leader>r :so $MYVIMRC<CR>
+noremap <silent> <leader>r :so $MYVIMRC<CR>
 " close quickfix and locationlist windows
-noremap <leader>c :ccl <bar> lcl<CR>
+noremap <silent> <leader>c :ccl <bar> lcl<CR>
 
 noremap ' `
 
@@ -206,7 +206,7 @@ noremap ' `
 " >i{, <i{
 
 " reformat code
-"nnoremap <leader>rf gg=G
+nnoremap <leader>rf gg=G
 
 " strip trailing whitespace
 function! StripWhitespace()
