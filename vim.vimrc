@@ -222,7 +222,7 @@ noremap <leader>ss :call StripWhitespace()<CR>
 
 " Section Plugins {{{
 " NERDTree
-map <silent> <c-e> :NERDTreeToggle<CR>
+nnoremap <silent> <leader>ex :NERDTreeToggle<CR>
 let NERDTreeIgnore=['.DS_Store', '.git']
 let NERDTreeMinimalUI=1
 let NERDTreeShowHidden=1
@@ -276,6 +276,9 @@ nmap s <Plug>(easymotion-overwin-f2)
 " move to line
 map  <leader>l <Plug>(easymotion-bd-jk)
 nmap <leader>l <Plug>(easymotion-overwin-line)
+
+" TagBar
+nnoremap <silent> <leader>tb :TagbarToggle<CR>
 
 " vim-tmux-navigator
 "let g:tmux_navigator_save_on_switch = 2
