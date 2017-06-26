@@ -11,15 +11,15 @@ set nocompatible
 call plug#begin('~/.vim/plugged')
 
 Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer' }
-Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
-Plug 'rking/ag.vim'
-Plug 'ctrlpvim/ctrlp.vim'
-Plug 'Raimondi/delimitMate'
-Plug 'godlygeek/tabular'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+Plug 'junegunn/vim-easy-align'
+Plug 'tpope/vim-dispatch'
+Plug 'tpope/vim-commentary'
+Plug 'jiangmiao/auto-pairs'
 Plug 'easymotion/vim-easymotion'
 Plug 'waveform/vim-colors-solarized'
 Plug 'christoomey/vim-tmux-navigator'
-Plug 'majutsushi/tagbar'
 
 call plug#end()
 " }}}
@@ -183,6 +183,8 @@ set completeopt+=longest       " completion mode on insert mode
 "set mat=2              " how many tenths of a second to blink
 set synmaxcol=256      " faster when opening files with large lines, default is 3000
 
+set grepprg=rg\ --vimgrep
+
 " }}}
 
 " Section Home-made Mapping and Function {{{
@@ -190,15 +192,12 @@ set synmaxcol=256      " faster when opening files with large lines, default is 
 noremap <silent> <leader>r :so $MYVIMRC<CR>
 " close quickfix and locationlist windows
 noremap <silent> <leader>c :ccl <bar> lcl<CR>
+" search tag about the word under cursor
+nnoremap <leader>t :ts<SPACE><C-R><C-W><CR>
 
 noremap ' `
 
-" mapping tab for intent
-"nnoremap <tab> V>
-"nnoremap <s-tab> V<
-"vnoremap <tab> >gv
-"vnoremap <s-tab> <gv
-"[DEPRECATED] #use below commands instead of it
+" use below commands to do indent
 " another reason is we want to keep functionality of Ctrl+I
 " 5>>, 3<<, 4==
 " >%, =%, <%, ]p
@@ -221,29 +220,44 @@ noremap <leader>ss :call StripWhitespace()<CR>
 " }}}
 
 " Section Plugins {{{
-" NERDTree
-nnoremap <silent> <leader>ex :NERDTreeToggle<CR>
-let NERDTreeIgnore=['.DS_Store', '.git']
-let NERDTreeMinimalUI=1
-let NERDTreeShowHidden=1
-let NERDTreeShowBookmarks=0
-let NERDTreeHighlightCursorline=1
+" netrw
+" let NERDTreeIgnore=['.DS_Store', '.git']
+" let NERDTreeMinimalUI=1
+" let NERDTreeShowHidden=1
+" let NERDTreeShowBookmarks=0
+" let NERDTreeHighlightCursorline=1
+let g:netrw_banner = 0
+let g:netrw_liststyle = 3
+let g:netrw_browse_split = 3
+let g:netrw_winsize = 20
+nnoremap <silent> <leader>ex :Lex<CR>
 
-" CtrlP
-let g:ctrlp_map = '<c-p>'
-let g:ctrlp_cmd = 'CtrlP'
-let g:ctrlp_working_path_mode = 'ra'
-let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-"let g:ctrlp_use_caching = 0
-let g:ctrlp_custom_ignore = {
-  \ 'dir' : '\v[\/]\.(git|hg|svn)$',
-  \ 'file': '\v\.(exe|so|dll|pdf|o|docx|pyc|d|a)$',
-  \ 'link': '',
-  \ }
+" FZF
+let g:fzf_buffers_jump = 1 " [Buffers] Jump to the existing window if possible
+nnoremap <silent> <leader>f  :FZF<CR>
+nnoremap <leader>ff :Files<SPACE>
+nnoremap <silent> <leader>b  :Buffers<CR>
+nnoremap <silent> <leader>m  :Marks<CR>
+"nnoremap <silent> <leader>w  :Windows<CR>
+nnoremap <silent> <leader>h  :History<CR>
+nnoremap <silent> <leader>hp :Helptags<CR>
+nnoremap <silent> <leader>a  :Find<SPACE><C-R><C-W><CR>
+
+"Strip
+" --column: Show column number
+" --line-number: Show line number
+" --no-heading: Do not show file headings in results
+" --fixed-strings: Search term as a literal string
+" --ignore-case: Case insensitive search
+" --no-ignore: Do not respect .gitignore, etc...
+" --hidden: Search hidden files and folders
+" --follow: Follow symlinks
+" --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
+" --color: Search color options
+"command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>).'| tr -d "\017"', 1, <bang>0)
+command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>), 1, <bang>0)
 
 " YouCompleteMe
-nnoremap gd :YcmCompleter GoToDefinitionElseDeclaration<CR>
-
 let g:ycm_confirm_extra_conf = 0
 let g:ycm_python_binary_path = 'python'
 let g:syntastic_always_populate_loc_list = 1
@@ -254,18 +268,7 @@ let g:ycm_filetype_blacklist = { 'hex' : 1, 'txt' : 1 }
 "let g:ycm_complete_in_comments = 1
 "let g:ycm_complete_in_strings = 0
 "let g:ycm_key_invoke_completion = '<c-a>'
-
-" Ag
-let g:ag_prg="ag --vimgrep --smart-case"
-noremap <leader>a  yiw:Ag <C-R><C-W><CR>
-let g:ag_working_path_mode="r"
-
-" Tabular
-noremap <silent> <leader>t: :Tabularize /:<CR>
-noremap <silent> <leader>t= :Tabularize /=<CR>
-noremap <silent> <leader>t, :Tabularize /,<CR>
-noremap <silent> <leader>t" :Tabularize /"<CR>
-noremap <silent> <leader>t\| :Tabularize /\|<CR>
+nnoremap gd :YcmCompleter GoToDefinitionElseDeclaration<CR>
 
 " Easy Motion
 let g:EasyMotion_smartcase = 1
@@ -273,12 +276,9 @@ let g:EasyMotion_do_mapping = 0 " disable default mapping
 " s{char}{char} to move to {char}{char}
 map  s <Plug>(easymotion-bd-f2)
 nmap s <Plug>(easymotion-overwin-f2)
-" move to line
-map  <leader>l <Plug>(easymotion-bd-jk)
-nmap <leader>l <Plug>(easymotion-overwin-line)
 
 " TagBar
-nnoremap <silent> <leader>tb :TagbarToggle<CR>
+"nnoremap <silent> <leader>tb :TagbarToggle<CR>
 
 " vim-tmux-navigator
 "let g:tmux_navigator_save_on_switch = 2
