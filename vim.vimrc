@@ -14,7 +14,7 @@ Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer' }
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/vim-easy-align'
-Plug 'tpope/vim-dispatch'
+Plug 'skywind3000/asyncrun.vim'
 Plug 'tpope/vim-commentary'
 Plug 'jiangmiao/auto-pairs'
 Plug 'easymotion/vim-easymotion'
@@ -187,26 +187,7 @@ set grepprg=rg\ --vimgrep
 
 " }}}
 
-" Section Home-made Mapping and Function {{{
-" reload vimrc file
-noremap <silent> <leader>r :so $MYVIMRC<CR>
-" close quickfix and locationlist windows
-noremap <silent> <leader>c :ccl <bar> lcl<CR>
-" search tag about the word under cursor
-nnoremap <leader>t :ts<SPACE><C-R><C-W><CR>
-
-noremap ' `
-
-" use below commands to do indent
-" another reason is we want to keep functionality of Ctrl+I
-" 5>>, 3<<, 4==
-" >%, =%, <%, ]p
-" =i{, =a{, =2a{
-" >i{, <i{
-
-" reformat code
-nnoremap <leader>rf gg=G
-
+" Section Home-made Function {{{
 " strip trailing whitespace
 function! StripWhitespace()
     let old_cursor = getpos('.')
@@ -215,7 +196,40 @@ function! StripWhitespace()
     call setpos('.', old_cursor)
     call setreg('/', old_query)
 endfunction
-noremap <leader>ss :call StripWhitespace()<CR>
+
+" }}}
+
+" Section Home-made Mapping {{{
+" reload vimrc file
+noremap  <silent> <leader>r  :so $MYVIMRC<CR>
+" close quickfix and locationlist windows
+noremap  <silent> <leader>c  :ccl <bar> lcl<CR>
+" search tag about the word under cursor
+nnoremap          <leader>t  :ts<SPACE><C-R><C-W><CR>
+" toggle netrw window
+nnoremap <silent> <leader>ex :Lex<CR>
+" reformat code
+nnoremap          <leader>rf gg=G
+" strip trailing whitespace
+noremap           <leader>ss :call StripWhitespace()<CR>
+
+nnoremap <silent> <leader>f  :FZF<CR>
+nnoremap          <leader>ff :Files<SPACE>
+nnoremap <silent> <leader>b  :Buffers<CR>
+nnoremap <silent> <leader>m  :Marks<CR>
+"nnoremap <silent> <leader>w  :Windows<CR>
+nnoremap <silent> <leader>h  :History<CR>
+nnoremap <silent> <leader>hp :Helptags<CR>
+nnoremap <silent> <leader>a  :Find<SPACE><C-R><C-W><CR>
+
+nnoremap          <leader>bd :AsyncRun ~/rock/udriver/build_system/premake/build_linux.sh kari<CR>
+
+" use below commands to do indent
+" another reason is we want to keep functionality of Ctrl+I
+" 5>>, 3<<, 4==
+" >%, =%, <%, ]p
+" =i{, =a{, =2a{
+" >i{, <i{
 
 " }}}
 
@@ -230,18 +244,9 @@ let g:netrw_banner = 0
 let g:netrw_liststyle = 3
 let g:netrw_browse_split = 3
 let g:netrw_winsize = 20
-nnoremap <silent> <leader>ex :Lex<CR>
 
 " FZF
 let g:fzf_buffers_jump = 1 " [Buffers] Jump to the existing window if possible
-nnoremap <silent> <leader>f  :FZF<CR>
-nnoremap <leader>ff :Files<SPACE>
-nnoremap <silent> <leader>b  :Buffers<CR>
-nnoremap <silent> <leader>m  :Marks<CR>
-"nnoremap <silent> <leader>w  :Windows<CR>
-nnoremap <silent> <leader>h  :History<CR>
-nnoremap <silent> <leader>hp :Helptags<CR>
-nnoremap <silent> <leader>a  :Find<SPACE><C-R><C-W><CR>
 
 "Strip
 " --column: Show column number
@@ -255,7 +260,7 @@ nnoremap <silent> <leader>a  :Find<SPACE><C-R><C-W><CR>
 " --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
 " --color: Search color options
 "command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>).'| tr -d "\017"', 1, <bang>0)
-command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>), 1, <bang>0)
+command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --type-add "wave:include:readme,txt,py,make,lua,py,log,json,h,cpp,config,cmake" --glob "!.git/*" --color "always" '.shellescape(<q-args>), 1, <bang>0)
 
 " YouCompleteMe
 let g:ycm_confirm_extra_conf = 0
@@ -276,9 +281,6 @@ let g:EasyMotion_do_mapping = 0 " disable default mapping
 " s{char}{char} to move to {char}{char}
 map  s <Plug>(easymotion-bd-f2)
 nmap s <Plug>(easymotion-overwin-f2)
-
-" TagBar
-"nnoremap <silent> <leader>tb :TagbarToggle<CR>
 
 " vim-tmux-navigator
 "let g:tmux_navigator_save_on_switch = 2
