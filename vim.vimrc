@@ -222,6 +222,7 @@ nnoremap <silent> <leader>m  :Marks<CR>
 nnoremap <silent> <leader>h  :History<CR>
 nnoremap <silent> <leader>hp :Helptags<CR>
 nnoremap <silent> <leader>a  :Find<SPACE><C-R><C-W><CR>
+nnoremap          <leader>s  :FindX<SPACE>
 
 nnoremap          <leader>bd :AsyncRun ~/rock/udriver/build_system/premake/build_linux.sh kari<CR>
 
@@ -256,7 +257,7 @@ let g:fzf_buffers_jump = 1 " [Buffers] Jump to the existing window if possible
 " --follow: Follow symlinks
 " --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
 " --color: Search color options
-"command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>).'| tr -d "\017"', 1, <bang>0)
+command! -bang -nargs=* FindX call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>).'| tr -d "\017"', 1, <bang>0)
 command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --type-add "wave:include:readme,txt,py,make,lua,py,log,json,h,cpp,config,cmake" --glob "!.git/*" --color "always" '.shellescape(<q-args>), 1, <bang>0)
 
 " YouCompleteMe
