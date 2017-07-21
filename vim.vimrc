@@ -224,6 +224,8 @@ nnoremap <silent> <leader>hp :Helptags<CR>
 nnoremap <silent> <leader>a  :Find<SPACE><C-R><C-W><CR>
 
 nnoremap          <leader>bd :AsyncRun ~/rock/udriver/build_system/premake/build_linux.sh kari<CR>
+nnoremap          <leader>cc :AsyncRun clang++ -std=c++14 -g "%"<CR>
+
 
 " use below commands to do indent
 " another reason is we want to keep functionality of Ctrl+I
