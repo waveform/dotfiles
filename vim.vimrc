@@ -201,41 +201,6 @@ endfunction
 
 " }}}
 
-" Section Home-made Mapping {{{
-" reload vimrc file
-noremap  <silent> <leader>r  :so $MYVIMRC<CR>
-" close quickfix and locationlist windows
-noremap  <silent> <leader>c  :ccl <bar> lcl<CR>
-" search tag about the word under cursor
-nnoremap          <leader>t  :ts<SPACE><C-R><C-W><CR>
-" toggle netrw window
-nnoremap <silent> <leader>ex :NERDTreeToggle<CR>
-" reformat code
-noremap           <leader>rf :Autoformat<CR>
-" strip trailing whitespace
-noremap           <leader>ss :call StripWhitespace()<CR>
-
-nnoremap <silent> <leader>f  :FZF<CR>
-nnoremap          <leader>ff :Files<SPACE>
-nnoremap <silent> <leader>b  :Buffers<CR>
-nnoremap <silent> <leader>m  :Marks<CR>
-nnoremap <silent> <leader>h  :History<CR>
-nnoremap <silent> <leader>hp :Helptags<CR>
-nnoremap <silent> <leader>a  :Find<SPACE><C-R><C-W><CR>
-
-nnoremap          <leader>bd :AsyncRun ~/rock/udriver/build_system/premake/build_linux.sh kari<CR>
-nnoremap          <leader>cc :AsyncRun clang++ -std=c++14 -g "%"<CR>
-
-
-" use below commands to do indent
-" another reason is we want to keep functionality of Ctrl+I
-" 5>>, 3<<, 4==
-" >%, =%, <%, ]p
-" =i{, =a{, =2a{
-" >i{, <i{
-
-" }}}
-
 " Section Plugins {{{
 " NERDTree
 let NERDTreeIgnore=['.DS_Store', '.git']
@@ -258,7 +223,7 @@ let g:fzf_buffers_jump = 1 " [Buffers] Jump to the existing window if possible
 " --follow: Follow symlinks
 " --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
 " --color: Search color options
-"command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>).'| tr -d "\017"', 1, <bang>0)
+command! -bang -nargs=* FindX call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>).'| tr -d "\017"', 1, <bang>0)
 command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --type-add "wave:include:readme,txt,py,make,lua,py,log,json,h,cpp,config,cmake" --glob "!.git/*" --color "always" '.shellescape(<q-args>), 1, <bang>0)
 
 " YouCompleteMe
@@ -277,9 +242,6 @@ nnoremap gd :YcmCompleter GoToDefinitionElseDeclaration<CR>
 " Easy Motion
 let g:EasyMotion_smartcase = 1
 let g:EasyMotion_do_mapping = 0 " disable default mapping
-" s{char}{char} to move to {char}{char}
-map  s <Plug>(easymotion-bd-f2)
-nmap s <Plug>(easymotion-overwin-f2)
 
 " vim-tmux-navigator
 "let g:tmux_navigator_save_on_switch = 2
@@ -287,3 +249,41 @@ let g:tmux_navigator_disable_when_zoomed = 1
 
 " }}}
 
+" Section Home-made Mapping {{{
+" reload vimrc file
+noremap  <silent> <leader>r  :so $MYVIMRC<CR>
+" close quickfix and locationlist windows
+noremap  <silent> <leader>c  :ccl <bar> lcl<CR>
+" search tag about the word under cursor
+nnoremap          <leader>t  :ts<SPACE><C-R><C-W><CR>
+" toggle netrw window
+nnoremap <silent> <leader>ex :NERDTreeToggle<CR>
+" reformat code
+noremap           <leader>rf :Autoformat<CR>
+" strip trailing whitespace
+noremap           <leader>ss :call StripWhitespace()<CR>
+nnoremap <silent> <leader>sb :set scb!<CR>
+
+nnoremap <silent> <leader>f  :FZF<CR>
+nnoremap          <leader>ff :Files<SPACE>
+nnoremap <silent> <leader>b  :Buffers<CR>
+nnoremap <silent> <leader>m  :Marks<CR>
+nnoremap <silent> <leader>h  :History<CR>
+nnoremap <silent> <leader>hp :Helptags<CR>
+nnoremap <silent> <leader>a  :Find<SPACE><C-R><C-W><CR>
+nnoremap          <leader>aa :FindX<SPACE>
+
+nnoremap          <leader>bd :AsyncRun ~/rock/udriver/build_system/premake/build_linux.sh kari<CR>
+nnoremap          <leader>cc :AsyncRun clang++ -std=c++14 -g "%"<CR>
+
+map               <leader>s <Plug>(easymotion-bd-f2)
+nmap              <leader>s <Plug>(easymotion-overwin-f2)
+
+" use below commands to do indent
+" another reason is we want to keep functionality of Ctrl+I
+" 5>>, 3<<, 4==
+" >%, =%, <%, ]p
+" =i{, =a{, =2a{
+" >i{, <i{
+
+" }}}
