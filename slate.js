@@ -197,10 +197,12 @@ S.bnda({
 
   // Focus Bindings
   // NOTE: some of these may *not* work if you have not removed the expose/spaces/mission control bindings
-  // "l:cmd" : S.op("focus", { "direction" : "right" }),
-  // "h:cmd" : S.op("focus", { "direction" : "left" }),
-  // "k:cmd" : S.op("focus", { "direction" : "up" }),
-  // "j:cmd" : S.op("focus", { "direction" : "down" }),
+  "l:ctrl" : S.op("focus", { "direction" : "right" }),
+  "h:ctrl" : S.op("focus", { "direction" : "left" }),
+  //"k:ctrl" : S.op("focus", { "direction" : "up" }),
+  //"j:ctrl" : S.op("focus", { "direction" : "down" }),
+  "1:cmd"  : S.op("focus", { "app" : "iTerm2" }),
+  "2:cmd"  : S.op("focus", { "app" : "Google Chrome" }),
   // "k:cmd;alt" : S.op("focus", { "direction" : "behind" }),
   // "j:cmd;alt" : S.op("focus", { "direction" : "behind" }),
   // "right:alt" : S.op("focus", { "direction" : "right" }),
