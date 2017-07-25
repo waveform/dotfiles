@@ -203,6 +203,12 @@ S.bnda({
   //"j:ctrl" : S.op("focus", { "direction" : "down" }),
   "1:cmd"  : S.op("focus", { "app" : "iTerm2" }),
   "2:cmd"  : S.op("focus", { "app" : "Google Chrome" }),
+  "3:cmd"  : S.op("focus", { "app" : "Finder" }),
+  "4:cmd"  : S.op("focus", { "app" : "Dictionary" }),
+  "5:cmd"  : S.op("focus", { "app" : "Dash" }),
+  "6:cmd"  : S.op("focus", { "app" : "Quiver" }),
+  "7:cmd"  : S.op("focus", { "app" : "Skype" }),
+
   // "k:cmd;alt" : S.op("focus", { "direction" : "behind" }),
   // "j:cmd;alt" : S.op("focus", { "direction" : "behind" }),
   // "right:alt" : S.op("focus", { "direction" : "right" }),
