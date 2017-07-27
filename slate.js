@@ -45,6 +45,8 @@ var winMidTri  = winTopTri.dup({ "y" : "screenSizeY/3+23" });
 var winLeftMidTri = winMidTri.dup({ "screen" : 0 });
 var winRightMidTri = winMidTri.dup({ "screen" : 1 });
 
+var winTopBig  = winFull.dup({ "height" : "screenSizeY*2/3" });
+
 // common layout hashes
 /*
 var lapMainHash = {
@@ -156,7 +158,7 @@ S.bnda({
   // "padEnter:ctrl" : universalLayout,
 
   // Basic Location Bindings
-  "up:ctrl;alt;cmd"   : winTopTri,
+  "up:ctrl;alt;cmd"   : winTopBig,
   "down:ctrl;alt;cmd" : winBotTri,
 
   "left:ctrl;alt;cmd" : winLeftMidTri,
