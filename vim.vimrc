@@ -19,7 +19,6 @@ Plug 'skywind3000/asyncrun.vim'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
 Plug 'jiangmiao/auto-pairs'
-Plug 'easymotion/vim-easymotion'
 Plug 'waveform/vim-colors-solarized'
 Plug 'christoomey/vim-tmux-navigator'
 
@@ -179,7 +178,7 @@ set pastetoggle=<leader>p    " paste mode: avoid auto indent, treat chars as lit
 match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$' " highlight conflicts
 match ErrorMsg /TODO|FIXME/
 
-set clipboard=unnamed
+" set clipboard^=unnamed
 
 set completeopt+=longest       " completion mode on insert mode
 "set mat=2              " how many tenths of a second to blink
@@ -275,9 +274,6 @@ nnoremap          <leader>aa :FindX<SPACE>
 
 nnoremap          <leader>bd :AsyncRun ~/rock/udriver/build_system/premake/build_linux.sh kari<CR>
 nnoremap          <leader>cc :AsyncRun clang++ -std=c++14 -g "%"<CR>
-
-map               <leader>s <Plug>(easymotion-bd-f2)
-nmap              <leader>s <Plug>(easymotion-overwin-f2)
 
 " use below commands to do indent
 " another reason is we want to keep functionality of Ctrl+I
