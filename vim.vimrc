@@ -253,8 +253,6 @@ let g:tmux_navigator_disable_when_zoomed = 1
 noremap  <silent> <leader>r  :so $MYVIMRC<CR>
 " close quickfix and locationlist windows
 noremap  <silent> <leader>c  :ccl <bar> lcl<CR>
-" search tag about the word under cursor
-nnoremap          <leader>t  :ts<SPACE><C-R><C-W><CR>
 " toggle netrw window
 nnoremap <silent> <leader>ex :NERDTreeToggle<CR>
 " reformat code
@@ -263,16 +261,19 @@ noremap           <leader>rf :Autoformat<CR>
 noremap           <leader>ss :call StripWhitespace()<CR>
 nnoremap <silent> <leader>sb :set scb!<CR>
 
-nnoremap <silent> <leader>f  :FZF<CR>
 nnoremap          <leader>ff :Files<SPACE>
+nnoremap <silent> <leader>f  :GFiles<CR>
 nnoremap <silent> <leader>b  :Buffers<CR>
+" search tag about the word under cursor
+nnoremap          <leader>tt :ts<SPACE><C-R><C-W><CR>
+nnoremap <silent> <leader>t  :call fzf#vim#tags(expand('<cword>'), {'options': '--exact --select-1 --exit-0'})<CR>
 nnoremap <silent> <leader>m  :Marks<CR>
 nnoremap <silent> <leader>h  :History<CR>
 nnoremap <silent> <leader>hp :Helptags<CR>
 nnoremap <silent> <leader>a  :Find<SPACE><C-R><C-W><CR>
 nnoremap          <leader>aa :FindX<SPACE>
 
-nnoremap          <leader>bd :AsyncRun ~/rock/udriver/build_system/premake/build_linux.sh kari<CR>
+nnoremap          <leader>bd :AsyncRun wks bld sigurd<CR>
 nnoremap          <leader>cc :AsyncRun clang++ -std=c++14 -g "%"<CR>
 
 " use below commands to do indent
