@@ -238,10 +238,6 @@ let g:ycm_filetype_blacklist = { 'hex' : 1, 'txt' : 1 }
 "let g:ycm_key_invoke_completion = '<c-a>'
 nnoremap gd :YcmCompleter GoToDefinitionElseDeclaration<CR>
 
-" Easy Motion
-let g:EasyMotion_smartcase = 1
-let g:EasyMotion_do_mapping = 0 " disable default mapping
-
 " vim-tmux-navigator
 "let g:tmux_navigator_save_on_switch = 2
 let g:tmux_navigator_disable_when_zoomed = 1
