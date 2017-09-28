@@ -178,7 +178,7 @@ set pastetoggle=<leader>p    " paste mode: avoid auto indent, treat chars as lit
 match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$' " highlight conflicts
 match ErrorMsg /TODO|FIXME/
 
-" set clipboard^=unnamed
+set clipboard=unnamed
 
 set completeopt+=longest       " completion mode on insert mode
 "set mat=2              " how many tenths of a second to blink
