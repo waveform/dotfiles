@@ -14,10 +14,12 @@ Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer' }
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
+Plug 'junegunn/vim-easy-align'
 Plug 'Chiel92/vim-autoformat'
 Plug 'skywind3000/asyncrun.vim'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
+Plug 'tpope/vim-repeat'
 Plug 'jiangmiao/auto-pairs'
 Plug 'waveform/vim-colors-solarized'
 Plug 'christoomey/vim-tmux-navigator'
@@ -223,7 +225,7 @@ let g:fzf_buffers_jump = 1 " [Buffers] Jump to the existing window if possible
 " --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
 " --color: Search color options
 command! -bang -nargs=* FindX call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>).'| tr -d "\017"', 1, <bang>0)
-command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --type-add "wave:include:readme,txt,py,make,lua,py,log,json,h,cpp,config,cmake" --glob "!.git/*" --color "always" '.shellescape(<q-args>), 1, <bang>0)
+command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --type-add "wave:include:readme,txt,py,make,lua,py,log,json,h,c,cpp,config,cmake" --glob "!.git/*" --color "always" '.shellescape(<q-args>), 1, <bang>0)
 
 " YouCompleteMe
 let g:ycm_confirm_extra_conf = 0
@@ -242,6 +244,11 @@ nnoremap gd :YcmCompleter GoToDefinitionElseDeclaration<CR>
 "let g:tmux_navigator_save_on_switch = 2
 let g:tmux_navigator_disable_when_zoomed = 1
 
+" vim-easy-align
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
 " }}}
 
 " Section Home-made Mapping {{{
@@ -269,7 +276,7 @@ nnoremap <silent> <leader>hp :Helptags<CR>
 nnoremap <silent> <leader>a  :Find<SPACE><C-R><C-W><CR>
 nnoremap          <leader>aa :FindX<SPACE>
 
-nnoremap          <leader>bd :AsyncRun wks bld sigurd<CR>
+nnoremap          <leader>bs :AsyncRun ~/folk/tools/cap/build.sh<CR>
 nnoremap          <leader>cc :AsyncRun clang++ -std=c++14 -g "%"<CR>
 
 " use below commands to do indent
