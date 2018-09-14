@@ -1,28 +1,24 @@
 " heavily inspired by Miller Medeiros .vimrc file
-"set rtp+=~/.files/vim
-"try
-"    source ~/.files/vim.vimrc
-"catch
-"endtry
+set rtp+=~/dotfiles/vim/
 
 
 set nocompatible
 " Section Plugin {{{
-call plug#begin('~/.vim/plugged')
+call plug#begin('~/dotfiles/vim/.vim/plugged')
 
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer' }
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer'  }
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/vim-easy-align'
-Plug 'Chiel92/vim-autoformat'
-Plug 'skywind3000/asyncrun.vim'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
+Plug 'sunaku/vim-dasht'
 Plug 'jiangmiao/auto-pairs'
-Plug 'waveform/vim-colors-solarized'
+Plug 'Chiel92/vim-autoformat'
 Plug 'christoomey/vim-tmux-navigator'
+Plug 'waveform/vim-colors-solarized'
 
 call plug#end()
 " }}}
@@ -33,8 +29,8 @@ syntax on
 filetype plugin indent on
 
 " local dirs
-set backupdir=~/.vim/backup
-set directory=~/.vim/swap
+set backupdir=~/dotfiles/vim/.vim/backup
+set directory=~/dotfiles/vim/.vim/swap
 
 " spell and encoding
 set spelllang=en_us
@@ -180,7 +176,7 @@ set pastetoggle=<leader>p    " paste mode: avoid auto indent, treat chars as lit
 match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$' " highlight conflicts
 match ErrorMsg /TODO|FIXME/
 
-set clipboard=unnamed
+set clipboard+=unnamedplus
 
 set completeopt+=longest       " completion mode on insert mode
 "set mat=2              " how many tenths of a second to blink
@@ -200,15 +196,19 @@ function! StripWhitespace()
     call setreg('/', old_query)
 endfunction
 
+function! TestBackend()
+    call job_start('tmux send-keys -t right C-z "python nnx_compiler_testbench_backend.py all" Enter')
+endfunction
 " }}}
 
 " Section Plugins {{{
 " NERDTree
-let NERDTreeIgnore=['.DS_Store', '.git']
+let NERDTreeIgnore=['\.DS_Store', '\.git', '\.pyc$']
 let NERDTreeMinimalUI=1
 let NERDTreeShowHidden=1
 let NERDTreeShowBookmarks=0
 let NERDTreeHighlightCursorline=1
+let NERDTreeQuitOnOpen=1
 
 " FZF
 let g:fzf_buffers_jump = 1 " [Buffers] Jump to the existing window if possible
@@ -227,22 +227,12 @@ let g:fzf_buffers_jump = 1 " [Buffers] Jump to the existing window if possible
 command! -bang -nargs=* FindX call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>).'| tr -d "\017"', 1, <bang>0)
 command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --type-add "wave:include:readme,txt,py,make,lua,py,log,json,h,c,cpp,config,cmake" --glob "!.git/*" --color "always" '.shellescape(<q-args>), 1, <bang>0)
 
-" YouCompleteMe
-let g:ycm_confirm_extra_conf = 0
-let g:ycm_python_binary_path = 'python'
-let g:syntastic_always_populate_loc_list = 1
-let g:ycm_min_num_of_chars_for_completion = 3
-let g:ycm_seed_identifiers_with_syntax = 1
-let g:ycm_filetype_whitelist = { 'cpp' : 1, 'hpp' : 1, 'c' : 1, 'h' : 1}
-let g:ycm_filetype_blacklist = { 'hex' : 1, 'txt' : 1 }
-"let g:ycm_complete_in_comments = 1
-"let g:ycm_complete_in_strings = 0
-"let g:ycm_key_invoke_completion = '<c-a>'
-nnoremap gd :YcmCompleter GoToDefinitionElseDeclaration<CR>
-
 " vim-tmux-navigator
-"let g:tmux_navigator_save_on_switch = 2
 let g:tmux_navigator_disable_when_zoomed = 1
+"let g:tmux_navigator_save_on_switch = 2
+
+let g:dasht_filetype_docsets = {}
+let g:dasht_filetype_docsets['python'] = ['(num|sci)py', 'pandas']
 
 " vim-easy-align
 " Start interactive EasyAlign in visual mode (e.g. vipga)
@@ -252,8 +242,12 @@ nmap ga <Plug>(EasyAlign)
 " }}}
 
 " Section Home-made Mapping {{{
+noremap           <M-s>      :w<CR>
+
 " reload vimrc file
 noremap  <silent> <leader>r  :so $MYVIMRC<CR>
+" reload file
+noremap  <silent> <leader>rr :edit!<CR>
 " close quickfix and locationlist windows
 noremap  <silent> <leader>c  :ccl <bar> lcl<CR>
 " toggle netrw window
@@ -262,6 +256,7 @@ nnoremap <silent> <leader>ex :NERDTreeToggle<CR>
 noremap           <leader>rf :Autoformat<CR>
 " strip trailing whitespace
 noremap           <leader>ss :call StripWhitespace()<CR>
+noremap           <leader>bb :call TestBackend()<CR>
 nnoremap <silent> <leader>sb :set scb!<CR>
 
 nnoremap          <leader>ff :Files<SPACE>
@@ -276,8 +271,10 @@ nnoremap <silent> <leader>hp :Helptags<CR>
 nnoremap <silent> <leader>a  :Find<SPACE><C-R><C-W><CR>
 nnoremap          <leader>aa :FindX<SPACE>
 
-nnoremap          <leader>bs :AsyncRun ~/folk/tools/cap/build.sh<CR>
-nnoremap          <leader>cc :AsyncRun clang++ -std=c++14 -g "%"<CR>
+nnoremap          <leader>cc :Make clang++ -std=c++14 -g "%"<CR>
+
+tnoremap          <Esc> <C-\><C-n>
+autocmd! FileType fzf tnoremap <buffer> <leader>q <CR>
 
 " use below commands to do indent
 " another reason is we want to keep functionality of Ctrl+I
