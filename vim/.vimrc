@@ -197,7 +197,7 @@ function! StripWhitespace()
 endfunction
 
 function! TestBackend()
-    call job_start('tmux send-keys -t right C-z "python nnx_compiler_testbench_backend.py all" Enter')
+    call job_start('tmux send-keys -t right C-z "python nnx_compiler_testbench_backend.py all -j 4" Enter')
 endfunction
 " }}}
 
@@ -229,7 +229,6 @@ command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-h
 
 " vim-tmux-navigator
 let g:tmux_navigator_disable_when_zoomed = 1
-"let g:tmux_navigator_save_on_switch = 2
 
 let g:dasht_filetype_docsets = {}
 let g:dasht_filetype_docsets['python'] = ['(num|sci)py', 'pandas']
@@ -242,8 +241,7 @@ nmap ga <Plug>(EasyAlign)
 " }}}
 
 " Section Home-made Mapping {{{
-noremap           <M-s>      :w<CR>
-
+noremap           <leader>s :w<CR>
 " reload vimrc file
 noremap  <silent> <leader>r  :so $MYVIMRC<CR>
 " reload file
@@ -251,7 +249,7 @@ noremap  <silent> <leader>rr :edit!<CR>
 " close quickfix and locationlist windows
 noremap  <silent> <leader>c  :ccl <bar> lcl<CR>
 " toggle netrw window
-nnoremap <silent> <leader>ex :NERDTreeToggle<CR>
+nnoremap <silent> <leader>ex :Ex<CR>
 " reformat code
 noremap           <leader>rf :Autoformat<CR>
 " strip trailing whitespace
@@ -261,6 +259,7 @@ nnoremap <silent> <leader>sb :set scb!<CR>
 
 nnoremap          <leader>ff :Files<SPACE>
 nnoremap <silent> <leader>f  :GFiles<CR>
+
 nnoremap <silent> <leader>b  :Buffers<CR>
 " search tag about the word under cursor
 nnoremap          <leader>tt :ts<SPACE><C-R><C-W><CR>
