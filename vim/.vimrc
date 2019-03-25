@@ -1,16 +1,15 @@
 " heavily inspired by Miller Medeiros .vimrc file
 set rtp+=~/dotfiles/vim/
 
-
 set nocompatible
 " Section Plugin {{{
 call plug#begin('~/dotfiles/vim/.vim/plugged')
 
-Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer'  }
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/vim-easy-align'
+Plug 'tpope/vim-vinegar'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
@@ -202,13 +201,6 @@ endfunction
 " }}}
 
 " Section Plugins {{{
-" NERDTree
-let NERDTreeIgnore=['\.DS_Store', '\.git', '\.pyc$']
-let NERDTreeMinimalUI=1
-let NERDTreeShowHidden=1
-let NERDTreeShowBookmarks=0
-let NERDTreeHighlightCursorline=1
-let NERDTreeQuitOnOpen=1
 
 " FZF
 let g:fzf_buffers_jump = 1 " [Buffers] Jump to the existing window if possible
@@ -230,8 +222,18 @@ command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-h
 " vim-tmux-navigator
 let g:tmux_navigator_disable_when_zoomed = 1
 
+" dasht
 let g:dasht_filetype_docsets = {}
 let g:dasht_filetype_docsets['python'] = ['(num|sci)py', 'pandas']
+let g:dasht_filetype_docsets['cpp'] = ['^c$']
+let g:dasht_filetype_docsets['html'] = ['css', 'js']
+
+" netrw
+let g:netrw_altv = 1
+let g:netrw_banner = 0
+let g:netrw_liststyle = 3
+let g:netrw_browse_split = 4
+let g:netrw_winsize = 25
 
 " vim-easy-align
 " Start interactive EasyAlign in visual mode (e.g. vipga)
@@ -240,46 +242,53 @@ xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
 " }}}
 
-" Section Home-made Mapping {{{
-noremap           <leader>s :w<CR>
-" reload vimrc file
-noremap  <silent> <leader>r  :so $MYVIMRC<CR>
-" reload file
-noremap  <silent> <leader>rr :edit!<CR>
-" close quickfix and locationlist windows
-noremap  <silent> <leader>c  :ccl <bar> lcl<CR>
-" toggle netrw window
-nnoremap <silent> <leader>ex :Ex<CR>
-" reformat code
-noremap           <leader>rf :Autoformat<CR>
-" strip trailing whitespace
-noremap           <leader>ss :call StripWhitespace()<CR>
-noremap           <leader>bb :call TestBackend()<CR>
-nnoremap <silent> <leader>sb :set scb!<CR>
-
-nnoremap          <leader>ff :Files<SPACE>
-nnoremap <silent> <leader>f  :GFiles<CR>
-
-nnoremap <silent> <leader>b  :Buffers<CR>
-" search tag about the word under cursor
-nnoremap          <leader>tt :ts<SPACE><C-R><C-W><CR>
-nnoremap <silent> <leader>t  :call fzf#vim#tags(expand('<cword>'), {'options': '--exact --select-1 --exit-0'})<CR>
-nnoremap <silent> <leader>m  :Marks<CR>
-nnoremap <silent> <leader>h  :History<CR>
-nnoremap <silent> <leader>hp :Helptags<CR>
-nnoremap <silent> <leader>a  :Find<SPACE><C-R><C-W><CR>
-nnoremap          <leader>aa :FindX<SPACE>
-
-nnoremap          <leader>cc :Make clang++ -std=c++14 -g "%"<CR>
-
-tnoremap          <Esc> <C-\><C-n>
-autocmd! FileType fzf tnoremap <buffer> <leader>q <CR>
-
 " use below commands to do indent
 " another reason is we want to keep functionality of Ctrl+I
 " 5>>, 3<<, 4==
 " >%, =%, <%, ]p
 " =i{, =a{, =2a{
 " >i{, <i{
+
+" Section Home-made Mapping {{{
+nnoremap <silent> <leader>a  :Find<SPACE><C-R><C-W><CR>
+nnoremap <silent> <leader>b  :Buffers<CR>
+" close quickfix and locationlist windows
+noremap  <silent> <leader>c  :ccl <bar> lcl<CR>
+nnoremap <silent> <leader>d  :call Dasht([expand('<cword>'), expand('<cWORD>')])<Return>
+nnoremap <silent> <leader>f  :GFiles<CR>
+nnoremap <silent> <leader>h  :History<CR>
+nnoremap <silent> <leader>m  :Marks<CR>
+" reload vimrc file
+noremap  <silent> <leader>r  :so $MYVIMRC<CR>
+noremap           <leader>s  :w<CR>
+
+
+
+" search tag about the word under cursor
+nnoremap          <leader>tt :ts<SPACE><C-R><C-W><CR>
+" reload file
+noremap  <silent> <leader>rr :edit!<CR>
+" toggle hybrid line numbers
+nnoremap <silent> <leader>ln :set nu! rnu!
+" toggle netrw window
+nnoremap <silent> <leader>ex :Lexplore<CR>
+" strip trailing whitespace
+noremap           <leader>ss :call StripWhitespace()<CR>
+" reformat code
+noremap           <leader>rf :Autoformat<CR>
+" toggle scrolling sync
+nnoremap <silent> <leader>sb :set scb!<CR>
+
+tnoremap          <Esc> <C-\><C-n>
+
+"nnoremap          <leader>ff :Files<SPACE>
+"nnoremap <silent> <leader>t  :call fzf#vim#tags(expand('<cword>'), {'options': '--exact --select-1 --exit-0'})<CR>
+"nnoremap <silent> <leader>hp :Helptags<CR>
+nnoremap          <leader>rg :FindX<SPACE>
+nnoremap          <leader>cc :Make clang++ -std=c++14 -g "%"<CR>
+noremap           <leader>bb :call TestBackend()<CR>
+
+autocmd! FileType fzf tnoremap <buffer> <leader>q <CR>
+autocmd FileType netrw setl bufhidden=wipe
 
 " }}}
