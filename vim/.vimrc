@@ -269,7 +269,7 @@ nnoremap          <leader>tt :ts<SPACE><C-R><C-W><CR>
 " reload file
 noremap  <silent> <leader>rr :edit!<CR>
 " toggle hybrid line numbers
-nnoremap <silent> <leader>ln :set nu! rnu!
+nnoremap <silent> <leader>ln :set nu! rnu!<CR>
 " toggle netrw window
 nnoremap <silent> <leader>ex :Lexplore<CR>
 " strip trailing whitespace
