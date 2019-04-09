@@ -5,7 +5,7 @@ set nocompatible
 " Section Plugin {{{
 call plug#begin('~/dotfiles/vim/.vim/plugged')
 
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer'  }
+Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/vim-easy-align'
@@ -198,6 +198,10 @@ endfunction
 function! TestBackend()
     call job_start('tmux send-keys -t right C-z "python nnx_compiler_testbench_backend.py all -j 4" Enter')
 endfunction
+
+function! RebuildTags()
+    call jobstart(['/bin/sh', '-c', 'rm -f tags && ctags -R --languages=python'])
+endfunction
 " }}}
 
 " Section Plugins {{{
@@ -217,7 +221,8 @@ let g:fzf_buffers_jump = 1 " [Buffers] Jump to the existing window if possible
 " --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
 " --color: Search color options
 command! -bang -nargs=* FindX call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>).'| tr -d "\017"', 1, <bang>0)
-command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --type-add "wave:include:readme,txt,py,make,lua,py,log,json,h,c,cpp,config,cmake" --glob "!.git/*" --color "always" '.shellescape(<q-args>), 1, <bang>0)
+command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --hidden --follow --type-add "wave:include:readme,txt,py,make,lua,py,log,json,h,c,cpp,config,cmake" --color "always" '.shellescape(<q-args>), 1, <bang>0)
+"command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --hidden --follow --type-add "wave:include:readme,txt,py,make,lua,py,log,json,h,c,cpp,config,cmake" --glob "!.git/*" --color "always" '.shellescape(<q-args>), 1, <bang>0)
 
 " vim-tmux-navigator
 let g:tmux_navigator_disable_when_zoomed = 1
@@ -278,6 +283,8 @@ noremap           <leader>ss :call StripWhitespace()<CR>
 noremap           <leader>rf :Autoformat<CR>
 " toggle scrolling sync
 nnoremap <silent> <leader>sb :set scb!<CR>
+" rebuild tags
+nnoremap          <leader>rt :call RebuildTags()<CR>
 
 tnoremap          <Esc> <C-\><C-n>
 
@@ -288,7 +295,7 @@ nnoremap          <leader>rg :FindX<SPACE>
 nnoremap          <leader>cc :Make clang++ -std=c++14 -g "%"<CR>
 noremap           <leader>bb :call TestBackend()<CR>
 
-autocmd! FileType fzf tnoremap <buffer> <leader>q <CR>
+autocmd! FileType fzf tnoremap <buffer> <esc> <c-c>
 autocmd FileType netrw setl bufhidden=wipe
 
 " }}}
