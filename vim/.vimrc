@@ -9,7 +9,6 @@ Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/vim-easy-align'
-Plug 'tpope/vim-vinegar'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
@@ -18,6 +17,7 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'Chiel92/vim-autoformat'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'waveform/vim-colors-solarized'
+Plug 'morhetz/gruvbox'
 
 call plug#end()
 " }}}
@@ -76,13 +76,20 @@ set ttimeoutlen=100            " faster timeout for escape key and others
 
 " }}}
 
-" Section User Interface {{{
 
-let g:solarized_termcolors=256
-let g:solarized_visibility='high'
-set t_Co=256                   " 256 colors terminal
-set background=dark
-colorscheme solarized
+" Section User Interface {{{
+if has('termguicolors')
+    set termguicolors
+    set background=dark
+    let g:gruvbox_contrast_dark='hard'
+    colorscheme gruvbox
+else
+    let g:solarized_termcolors=256
+    let g:solarized_visibility='high'
+    set t_Co=256                   " 256 colors terminal
+    set background=dark
+    colorscheme solarized
+endif
 
 if has('gui_running')
     set guifont=Monaco:h18
@@ -237,7 +244,7 @@ let g:dasht_filetype_docsets['html'] = ['css', 'js']
 let g:netrw_altv = 1
 let g:netrw_banner = 0
 let g:netrw_liststyle = 3
-let g:netrw_browse_split = 4
+let g:netrw_browse_split = 0
 let g:netrw_winsize = 25
 
 " vim-easy-align
@@ -260,6 +267,8 @@ nnoremap <silent> <leader>b  :Buffers<CR>
 " close quickfix and locationlist windows
 noremap  <silent> <leader>c  :ccl <bar> lcl<CR>
 nnoremap <silent> <leader>d  :call Dasht([expand('<cword>'), expand('<cWORD>')])<Return>
+" toggle netrw window
+nnoremap <silent> <leader>e  :Lexplore<CR>
 nnoremap <silent> <leader>f  :GFiles<CR>
 nnoremap <silent> <leader>h  :History<CR>
 nnoremap <silent> <leader>m  :Marks<CR>
@@ -268,15 +277,12 @@ noremap  <silent> <leader>r  :so $MYVIMRC<CR>
 noremap           <leader>s  :w<CR>
 
 
-
 " search tag about the word under cursor
 nnoremap          <leader>tt :ts<SPACE><C-R><C-W><CR>
 " reload file
 noremap  <silent> <leader>rr :edit!<CR>
 " toggle hybrid line numbers
 nnoremap <silent> <leader>ln :set nu! rnu!<CR>
-" toggle netrw window
-nnoremap <silent> <leader>ex :Lexplore<CR>
 " strip trailing whitespace
 noremap           <leader>ss :call StripWhitespace()<CR>
 " reformat code
@@ -296,6 +302,12 @@ nnoremap          <leader>cc :Make clang++ -std=c++14 -g "%"<CR>
 noremap           <leader>bb :call TestBackend()<CR>
 
 autocmd! FileType fzf tnoremap <buffer> <esc> <c-c>
-autocmd FileType netrw setl bufhidden=wipe
+autocmd! FileType netrw setl bufhidden=delete
+" autocmd WinLeave * call ClosePreviewWindow()
+" function ClosePreviewWindow()
+"     if &pvw
+"         pclose
+"     endif
+" endfunction
 
 " }}}
