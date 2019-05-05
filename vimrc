@@ -3,7 +3,7 @@ set rtp+=~/dotfiles/vim/
 
 set nocompatible
 " Section Plugin {{{
-call plug#begin('~/dotfiles/vim/.vim/plugged')
+call plug#begin('~/.config/vim/plugged')
 
 Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
