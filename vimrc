@@ -78,7 +78,14 @@ set ttimeoutlen=100            " faster timeout for escape key and others
 
 
 " Section User Interface {{{
+if exists('+termguicolors')
+    let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+    let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+    set termguicolors
+endif
 if has('termguicolors')
+    let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+    let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
     set termguicolors
     set background=dark
     let g:gruvbox_contrast_dark='hard'
