@@ -1,5 +1,5 @@
 " heavily inspired by Miller Medeiros .vimrc file
-set rtp+=~/dotfiles/vim/
+set rtp+=~/.config/vim/
 
 set nocompatible
 " Section Plugin {{{
@@ -16,7 +16,7 @@ Plug 'sunaku/vim-dasht'
 Plug 'jiangmiao/auto-pairs'
 Plug 'Chiel92/vim-autoformat'
 Plug 'christoomey/vim-tmux-navigator'
-Plug 'waveform/vim-colors-solarized'
+" Plug 'waveform/vim-colors-solarized'
 Plug 'morhetz/gruvbox'
 
 call plug#end()
@@ -28,8 +28,8 @@ syntax on
 filetype plugin indent on
 
 " local dirs
-set backupdir=~/dotfiles/vim/.vim/backup
-set directory=~/dotfiles/vim/.vim/swap
+set backupdir=~/.config/nvim/backup
+set directory=~/.config/nvim/swap
 
 " spell and encoding
 set spelllang=en_us
@@ -78,11 +78,11 @@ set ttimeoutlen=100            " faster timeout for escape key and others
 
 
 " Section User Interface {{{
-if exists('+termguicolors')
-    let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-    let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-    set termguicolors
-endif
+" if exists('+termguicolors')
+"     let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+"     let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+"     set termguicolors
+" endif
 if has('termguicolors')
     let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
     let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
@@ -234,9 +234,8 @@ let g:fzf_buffers_jump = 1 " [Buffers] Jump to the existing window if possible
 " --follow: Follow symlinks
 " --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
 " --color: Search color options
-command! -bang -nargs=* FindX call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>).'| tr -d "\017"', 1, <bang>0)
-command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --hidden --follow --type-add "wave:include:readme,txt,py,make,lua,py,log,json,h,c,cpp,config,cmake" --color "always" '.shellescape(<q-args>), 1, <bang>0)
-"command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --hidden --follow --type-add "wave:include:readme,txt,py,make,lua,py,log,json,h,c,cpp,config,cmake" --glob "!.git/*" --color "always" '.shellescape(<q-args>), 1, <bang>0)
+command! -bang -nargs=* FindX call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>).'| tr -d "\017"', 1, <bang>0)
+command! -bang -nargs=* Find  call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --follow --glob "!tags" --color "always" '.shellescape(<q-args>), 1, <bang>0)
 
 " vim-tmux-navigator
 let g:tmux_navigator_disable_when_zoomed = 1
@@ -269,23 +268,25 @@ nmap ga <Plug>(EasyAlign)
 " >i{, <i{
 
 " Section Home-made Mapping {{{
-nnoremap <silent> <leader>a  :Find<SPACE><C-R><C-W><CR>
+nnoremap          <leader>a  :Find<SPACE>
 nnoremap <silent> <leader>b  :Buffers<CR>
 " close quickfix and locationlist windows
 noremap  <silent> <leader>c  :ccl <bar> lcl<CR>
 nnoremap <silent> <leader>d  :call Dasht([expand('<cword>'), expand('<cWORD>')])<Return>
 " toggle netrw window
 nnoremap <silent> <leader>e  :Lexplore<CR>
-nnoremap <silent> <leader>f  :GFiles<CR>
+nnoremap <silent> <leader>f  :Find<SPACE><C-R><C-W><CR>
+nnoremap <silent> <leader>g  :GFiles<CR>
 nnoremap <silent> <leader>h  :History<CR>
 nnoremap <silent> <leader>m  :Marks<CR>
 " reload vimrc file
 noremap  <silent> <leader>r  :so $MYVIMRC<CR>
-noremap           <leader>s  :w<CR>
+nnoremap <silent> <leader>t  :call fzf#vim#tags(expand('<cword>'), {'options': '--exact --select-1 --exit-0'})<CR>
+noremap           <leader>w  :w<CR>
 
 
 " search tag about the word under cursor
-nnoremap          <leader>tt :ts<SPACE><C-R><C-W><CR>
+nnoremap          <leader>tt :ts<SPACE>
 " reload file
 noremap  <silent> <leader>rr :edit!<CR>
 " toggle hybrid line numbers
@@ -301,20 +302,11 @@ nnoremap          <leader>rt :call RebuildTags()<CR>
 
 tnoremap          <Esc> <C-\><C-n>
 
-"nnoremap          <leader>ff :Files<SPACE>
-"nnoremap <silent> <leader>t  :call fzf#vim#tags(expand('<cword>'), {'options': '--exact --select-1 --exit-0'})<CR>
 "nnoremap <silent> <leader>hp :Helptags<CR>
 nnoremap          <leader>rg :FindX<SPACE>
 nnoremap          <leader>cc :Make clang++ -std=c++14 -g "%"<CR>
 noremap           <leader>bb :call TestBackend()<CR>
 
 autocmd! FileType fzf tnoremap <buffer> <esc> <c-c>
-autocmd! FileType netrw setl bufhidden=delete
-" autocmd WinLeave * call ClosePreviewWindow()
-" function ClosePreviewWindow()
-"     if &pvw
-"         pclose
-"     endif
-" endfunction
 
 " }}}
