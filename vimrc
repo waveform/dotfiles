@@ -14,7 +14,7 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'sunaku/vim-dasht'
 Plug 'jiangmiao/auto-pairs'
-Plug 'Chiel92/vim-autoformat'
+" Plug 'Chiel92/vim-autoformat'
 Plug 'christoomey/vim-tmux-navigator'
 " Plug 'waveform/vim-colors-solarized'
 Plug 'morhetz/gruvbox'
@@ -279,6 +279,7 @@ nnoremap <silent> <leader>f  :Find<SPACE><C-R><C-W><CR>
 nnoremap <silent> <leader>g  :GFiles<CR>
 nnoremap <silent> <leader>h  :History<CR>
 nnoremap <silent> <leader>m  :Marks<CR>
+nnoremap          <leader>q  :q<CR>
 " reload vimrc file
 noremap  <silent> <leader>r  :so $MYVIMRC<CR>
 nnoremap <silent> <leader>t  :call fzf#vim#tags(expand('<cword>'), {'options': '--exact --select-1 --exit-0'})<CR>
