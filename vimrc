@@ -306,7 +306,10 @@ tnoremap          <Esc> <C-\><C-n>
 "nnoremap <silent> <leader>hp :Helptags<CR>
 nnoremap          <leader>rg :FindX<SPACE>
 nnoremap          <leader>cc :Make clang++ -std=c++14 -g "%"<CR>
-noremap           <leader>bb :call TestBackend()<CR>
+nnoremap          <leader>bb :call TestBackend()<CR>
+
+" delete word backward/forward without leaving insert mode
+"inoremap <C-R>    <C-o>dw
 
 autocmd! FileType fzf tnoremap <buffer> <esc> <c-c>
 
